@@ -8,8 +8,8 @@ import { RouterLink } from 'vue-router';
         <img src="../assets/bitcoin.png" alt="Coin">
         <h2>CryptoWorld</h2>
     <ul>
-     <router-link :to="'/'" class="links"><li>Home</li></router-link>
-     <router-link :to="'/Coins'" class="links"><li>Coins</li></router-link>
+     <router-link :to="'/'" class="links" active-class="active"><li >Home</li></router-link>
+     <router-link :to="'/Coins'" class="links" active-class="active"><li >Coins</li></router-link>
     </ul>
     </div>
 </template>
@@ -21,7 +21,8 @@ import { RouterLink } from 'vue-router';
     
   }
 ul{
-    margin-top: 40px
+    margin-top: 40px;
+   
 }
 ul li{
         width: 100%;
@@ -35,11 +36,16 @@ ul li{
         margin-top: 5px;
         letter-spacing: 2px;
 }
-ul li:hover{
+.links{
+ text-decoration: none;
+}
+ul li:hover,
+.links.active li {
     background-color: #2b3662;
     color: #f0f2ee;
     font-size: 20px;
     filter: brightness(1.3);
+    box-shadow: -2px 2px 2px rgb(29, 29, 29);
 }
   h2{
         color: #55f0fa;
