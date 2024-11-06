@@ -44,9 +44,13 @@ watch(currency, (newCurrency) => {
                 <span># {{ props.data.market_cap_rank }}</span>
              </div> 
            <div class="AboutCoin">
-           <span>About</span>
-            <p>Bitcoin (BTC) is the first cryptocurrency built on blockchain technology, also known as a decentralized digital currency that is based on cryptography. Unlike government-issued or fiat currencies such as US Dollars or Euro which are controlled by central banks, Bitcoin can operate without the need of a central authority like a central bank or a company. The decentralized nature allows it to operate on a peer-to-peer network whereby users are able to send funds to each other without going through intermediaries.</p>
-           </div>
+               <span class="CoinAbout">About</span>
+                <h4>High_24h: <span>  {{ props.data.high_24h }}</span></h4>
+                <h4>low_24h: <span>  {{ props.data.low_24h }} </span></h4>
+                <h4>price_change_24h: <span>  {{ props.data.price_change_24h }} </span></h4>
+                <h4>Total_volume: <span>  {{ props.data.total_volume }} </span></h4>
+                <h4>Total_supply: <span>  {{ props.data.total_supply }} </span></h4>
+          </div>
          </div>
          <div class="CoinConverter">
             <span @click="props.toggleInfo" class="close">x</span>
@@ -160,8 +164,11 @@ input[type=number]::-webkit-inner-spin-button {
 }
 .AboutCoin{
     margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
-.AboutCoin span{
+.AboutCoin .CoinAbout{
     background-color: #2b3662;
     color: #f0f2ee;
     font-size: 20px;
@@ -170,12 +177,16 @@ input[type=number]::-webkit-inner-spin-button {
     box-shadow: -2px 2px 2px rgb(29, 29, 29);
 }
 
-.AboutCoin p{
+.AboutCoin h4{
     background-color: #2b3662;
     color: #f0f2ee;
-    filter: brightness(.7);
     padding: 25px;
     box-shadow: -2px 2px 2px rgb(29, 29, 29);
     margin-top: 14px;
+    letter-spacing: 2px;
+}
+
+.AboutCoin span{
+  color: #55f0fa;
 }
 </style>

@@ -8,7 +8,9 @@ const data = reactive({
    Isloading: true,
    found: false
 });
-
+const temp = reactive({
+  data: []
+})
 const search = ref(''); 
 
 async function CoinList() {
@@ -22,6 +24,7 @@ async function CoinList() {
 
   const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd', options);
   data.InfoData = await response.json();
+  temp.data = data.InfoData;
   data.Isloading = false;
 }
 watch(search, ()=>{
@@ -39,9 +42,11 @@ watch(search, ()=>{
 
        if(found){ 
          data.found = false;
+         data.InfoData = temp.data;
        }
    }else{
       data.found = false;
+      data.InfoData = temp.data;
    }
 })
 onMounted(() => {
@@ -65,12 +70,14 @@ onMounted(() => {
         </router-link>
       </div>
       <div v-else>
-         <p>Loading coins...</p>
+         <h1>Loading...</h1>
       </div>
-      
+
       <router-link to="/Coins"><button>View More</button></router-link>
    </div>
 </template>
+
+
 
 <style scoped>
 h1 {
