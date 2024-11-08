@@ -69,7 +69,7 @@ onMounted(() => {
         <h1 class="mt-[30px] text-white text-[30px]">Loading...</h1>
       </div>
       <div v-else @click="ShowCoinInfo" v-for="index in 52" :key="index">
-          <CoinsCards :data="data.InfoData[index-1]" class="w-[200px] h-[100px]" />
+          <CoinsCards :data="data.InfoData[index-1]" />
        </div>
   </div>
 

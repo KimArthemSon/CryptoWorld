@@ -54,7 +54,7 @@ CoinWatch = watch(coin, (newCoin) => {
 
 
 <template>
-    <div class=" absolute z-2 w-[890px] left-[25%] top-[90px]">
+    <div class=" absolute z-3 w-[890px] left-[25%] top-[90px]">
       <div class="flex w-[900px] h-[510px] border-2 border-[rgb(255,255,255,.5)] bg-[rgb(50,62,110)] 
       filter brightness-[.9] shadow-[-3px_3px_3px_rgb(29,29,29)]">
          <div class="p-[10px] h-full w-[570px] border-r-2 border-[solid rgb(255, 255, 255, .8)]">
