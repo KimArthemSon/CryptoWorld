@@ -5,32 +5,14 @@ import Navbar from './components/Navbar.vue';
 </script>
  
 <template>
-  <div id="Container">
-    <Navbar class="Navbar"/>
-    <RouterView class="Pages"/>
+  <div class="flex shadow-lg bg-[#323e6e] filter brightness-[1.5] rounded-md">
+    <Navbar class="flex flex-col items-center w-[300px] h-[600px] bg-[#323e6e] rounded-[10px]
+   border-r-2 border-[rgba(213,213,213,0.5)]"/>
+    <RouterView class="w-[900px] h-[600px]"/>
   </div>
-  
 </template>
 
 
 <style scoped>
-   #Container{
-     background-color: #323e6e;
-     display: flex;
-     box-shadow: -7px 7px 5px #1b2340;
-     border-radius: 10px;
-     filter: brightness(1.3);
-   }
-   .Navbar{
-    width: 300px;
-    height: 600px;
-    background-color: #323e6e;
-    border-radius: 10px;
-     border-right: 1px solid rgba(213, 213, 213, 0.5);
-   }
-   .Pages{
-    width: 900px;
-    height: 600px;
-   }
 </style>
  

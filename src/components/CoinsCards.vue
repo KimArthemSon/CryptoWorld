@@ -22,51 +22,16 @@ function ShowCoinInfo(){
 
 <template>
       <CoinInfo :data="props.data" v-if="toggleInfo" :toggleInfo="ShowCoinInfo"/> 
-      <div class="ContainerCards"  @click="ShowCoinInfo2">
-        <img v-bind:src="props.data.image" alt="Coin">
-    <div class="infoCard">
+      <div class="flex items-center justify-center text-[white] border-2 border-white h-[100px] w-[200px] bg-[rgb(50, 62, 110, 1.3)] cursor-pointer
+      hover:shadow-[-2px_2px_2px_rgb(29,29,29)] hover:brightness-[1.1] bg-[#323e6e] focus:outline-none"
+      @click="ShowCoinInfo2">
+        <img v-bind:src="props.data.image" alt="Coin" class="w-[50px] h-[50px] mr-[5px]">
+    <div class="flex flex-col">
       <span>$ {{ props.data.current_price }}</span>
-      <span>{{ props.data.name }}</span>
+      <span class="text-[#55f0fa]">{{ props.data.name }}</span>
     </div>
       </div>
-     
 </template>
 
 <style scoped>
-
-.ContainerCards{
-  color: white;
-   border: 1px solid white;
-   display: flex;
-   width: 100%;
-   height: 100%;
-   align-items: center;
-   justify-content: center;
-   background-color: rgb(50, 62, 110, 1.3);
-   cursor: pointer;
-}
-
-.ContainerCards:hover{
-  box-shadow: -2px 2px 2px rgb(29, 29, 29);
-  filter: brightness(1.3);
-}
-
-.infoCardCont{
-  display: flex;
-}
-img{
-    width: 50px;
-    height: 50px;
-    margin-right: 5px;
-}
- .infoCard{
-    display: flex;
-    flex-direction: column;
-}
-.infoCard span:nth-child(2){
-  color: #55f0fa;
-}
-
-
-
 </style>

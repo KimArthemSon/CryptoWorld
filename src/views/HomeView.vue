@@ -55,69 +55,32 @@ onMounted(() => {
 </script>
 
 <template>
-   <div class="Container">
-      <h1>Crypto Coins</h1>
-      <input type="text" v-model="search" placeholder="Name of Coin">
+   <div class="flex items-center flex-col">
+      <h1 class="text-[#55f0fa] filter brightness-[2] text-[40px] mt-[30px] font-bold">Crypto Coins</h1>
+      <input type="text" v-model="search" placeholder="Name of Coin"
+      class="mt-[30px] mb-[20px] w-[600px] h-[40px] rounded-[10px] p-[5px] placeholder-black border filter brightness-[.8] shadow-[-3px_2px_2px_rgb(29,29,29)]">
       
       <div v-if="!data.Isloading && search === '' " v-for="index in 5" :key="index">
-        <router-link to="/Coins" class="Link">
-          <Coins :data="data.InfoData[index - 1]" class="Coins"/>
+        <router-link to="/Coins" class="no-underline">
+          <Coins :data="data.InfoData[index - 1]" class="cursor-pointer hover:shadow-[-4px_4px_4px_rgb(29,29,29)]"/>
         </router-link>
       </div>
       <div v-else-if="data.found">
-         <router-link to="/Coins" class="Link">
-          <Coins :data="data.InfoData" class="Coins"/>
+         <router-link to="/Coins" class="no-underline">
+          <Coins :data="data.InfoData" class="cursor-pointer hover:shadow-[-4px_4px_4px_rgb(29,29,29)]"/>
         </router-link>
       </div>
       <div v-else>
-         <h1>Loading...</h1>
+         <h1 class="text-white text-[30px]">Loading...</h1>
       </div>
 
-      <router-link to="/Coins"><button>View More</button></router-link>
+      <router-link to="/Coins"><button class="mt-[10px] p-[7px] text-[black] cursor-pointer shadow-[-3px_2px_2px_rgb(29,29,29)] bg-[white]
+         transition-transform duration-150 transform hover:scale-105 active:scale-95 focus:outline-none">View More</button></router-link>
    </div>
 </template>
 
 
 
 <style scoped>
-h1 {
-   color: #55f0fa;
-   filter: brightness(2);
-   font-size: 40px;
-   margin-top: 40px;
-}
 
-.Container {
-   display: flex;
-   align-items: center;
-   flex-direction: column;
-}
-
-input {
-   margin-top: 30px;
-   width: 600px;
-   height: 40px;
-   border-radius: 10px;
-   padding: 5px;
-   font-size: 15px;
-   margin-bottom: 30px;
-}
-
-.Link {
-   text-decoration: none;
-}
-
-button {
-   margin-top: 10px;
-   padding: 7px;
-   color: black;
-   cursor: pointer;
-   box-shadow: -3px 2px 2px rgb(29, 29, 29);
-}
-
-.Coins:hover {
-   filter: brightness(1.3);
-   cursor: pointer;
-   box-shadow: -4px 4px 4px rgb(29, 29, 29);
-}
 </style>

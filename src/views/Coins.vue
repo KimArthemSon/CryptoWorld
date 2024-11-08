@@ -1,6 +1,5 @@
 <script setup>
 import CoinsCards from '@/components/CoinsCards.vue';
-import CoinInfo from '@/components/CoinInfo.vue';
 
 import { reactive, ref, watch } from 'vue';
 import { onMounted } from 'vue';
@@ -58,20 +57,19 @@ onMounted(() => {
 
 </script>
 <template>
-  <div class="ParentCont">
-    
-    <form action="">
-      <input type="text" v-model="search" placeholder="Name of Coin">
+  <div class="w-[900px] h-[600px] flex justify-center items-center flex-col">
+    <form action="" class="mt-[30px]">
+      <input type="text" v-model="search" placeholder="Name of Coin" class=" mb-[20px] w-[600px] h-[40px] rounded-[10px] p-[5px] placeholder-black border filter brightness-[.8] shadow-[-3px_2px_2px_rgb(29,29,29)]">
     </form>
-     <div class="CoinsContainer">
+     <div class="grid grid-cols-4 gap-[10px] p-[5px] h-[600px] overflow-y-auto">
       <div v-if="data.Isfound">
-        <CoinsCards :data="data.InfoData" />
+        <CoinsCards :data="data.InfoData"/>
       </div>
       <div v-else-if="data.Isloading">
-        <h1 >Loading...</h1>
+        <h1 class="mt-[30px] text-white text-[30px]">Loading...</h1>
       </div>
       <div v-else @click="ShowCoinInfo" v-for="index in 52" :key="index">
-          <CoinsCards :data="data.InfoData[index-1]" />
+          <CoinsCards :data="data.InfoData[index-1]" class="w-[200px] h-[100px]" />
        </div>
   </div>
 
@@ -80,67 +78,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.ParentCont{
-  width: 900px;
-  height: 600px;  
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-.ContainerCards{
-  color: white;
-   border: 1px solid white;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   background-color: rgb(50, 62, 110, 1.3);
-   cursor: pointer;
-}
 
-.ContainerCards:hover{
-  box-shadow: -2px 2px 2px rgb(29, 29, 29);
-  filter: brightness(1.3);
-}
-
-
-
-.CoinsContainer{
-  display: grid;
-  grid-template-columns: repeat(4, 200px); 
-  grid-auto-rows: 100px;
-  gap: 10px;
-  padding: 5px;
-
-  height: 600px;
-
-  overflow-y: auto;
-  
+.overflow-y-auto::-webkit-scrollbar {
+    display: none;
   }
-
-  .CoinsContainer::-webkit-scrollbar {
-  display: none;
-}
-.CoinsContainer {
-  -ms-overflow-style: none; 
-  scrollbar-width: none;  
-}
-
-form{
-   margin-top: 30px;
-   
-}
-input{
-  width: 610px;
-   height: 40px;
-   border-radius: 10px;
-   padding: 5px;
-   font-size: 15px;
-   margin-bottom: 30px;
-}
-
-h1{
-  color:white;
-}
 
 </style>

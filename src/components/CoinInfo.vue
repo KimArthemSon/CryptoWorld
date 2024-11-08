@@ -10,19 +10,39 @@ const props = defineProps({
         type: Function
     }
 })
-const coin = ref(1); 
-const currency = ref(coin.value * (props.data.current_price || 0)); 
+const coin = ref(1.00); 
+const currency = ref(coin.value * (props.data.current_price || 0.00)); 
 
+let CoinWatch = ()=>{};
 
-watch(coin, (newCoin) => {
-    currency.value = newCoin * (props.data.current_price || 0);
-});
+let USDwatch = ()=>{};
 
-watch(currency, (newCurrency) => {
+function CoinORusd(ident){
+if(!ident){
+  Coinsy();
+}
+else{ 
+USD();
+}
+}
+function USD(){
+   CoinWatch();
+    USDwatch = watch(currency, (newCurrency) => {
     if (props.data.current_price) {
         coin.value = newCurrency / props.data.current_price;
     }
 });
+ }
+function Coinsy(){
+    USDwatch();
+CoinWatch = watch(coin, (newCoin) => {
+  console.log("hello")
+    currency.value = newCoin * (props.data.current_price || 0.00);
+});
+
+}
+
+
 /*async function fetchCurrency(){
   const response = await fetch('https:/api.exchangerate-api.com/v4/latest/usd');
   const currency =await response.json();
@@ -34,30 +54,31 @@ watch(currency, (newCurrency) => {
 
 
 <template>
-    <div class="ParentInfoCont">
-      <div class="InfoCaoinCont">
-         <div class="CoinInfo">
-             <h1>$ {{ props.data.current_price }}</h1> 
-             <div class="NameCoin">
-                <img v-bind:src="props.data.image" alt="Coin">
-                <span>{{ props.data.name }}</span>
-                <span># {{ props.data.market_cap_rank }}</span>
+    <div class=" absolute z-2 w-[890px] left-[25%] top-[90px]">
+      <div class="flex w-[900px] h-[510px] border-2 border-[rgb(255,255,255,.5)] bg-[rgb(50,62,110)] 
+      filter brightness-[.9] shadow-[-3px_3px_3px_rgb(29,29,29)]">
+         <div class="p-[10px] h-full w-[570px] border-r-2 border-[solid rgb(255, 255, 255, .8)]">
+             <h1 class="mb-[10px] mt-[30px] tracking-[5px] text-[35px] text-white">$ {{ props.data.current_price }}</h1> 
+             <div class="flex items-center gap-[10px]">
+                <img v-bind:src="props.data.image" alt="Coin" class="w-[50x] h-[50px]">
+                <span class="text-[#55f0fa] text-[18px] font-[600]">{{ props.data.name }}</span>
+                <span class="text-white text-[18px] font-[600]"># {{ props.data.market_cap_rank }}</span>
              </div> 
-           <div class="AboutCoin">
-               <span class="CoinAbout">About</span>
-                <h4>High_24h: <span>  {{ props.data.high_24h }}</span></h4>
-                <h4>low_24h: <span>  {{ props.data.low_24h }} </span></h4>
-                <h4>price_change_24h: <span>  {{ props.data.price_change_24h }} </span></h4>
-                <h4>Total_volume: <span>  {{ props.data.total_volume }} </span></h4>
-                <h4>Total_supply: <span>  {{ props.data.total_supply }} </span></h4>
+           <div class="flex flex-col w-full h-[320px] overflow-y-auto mt-[25px]">
+               <span class="bg-[#2b3662] text-[20px] filter brightness-[1.3] p-[10px] shadow-[-2px_2px_2px_rgb(29,29,29)] text-[#55f0fa] w-[80px] text-center font-bold ">About</span>
+                <h4 class="bg-[#2b3662] text-[#f0f2ee] p-[25px] shadow-[-2px_2px_2px_rgb(29,29,29)] mt-[14px] tracking-[2px]">High_24h: <span class="text-[#55f0fa]">  {{ props.data.high_24h }}</span></h4>
+                <h4 class="bg-[#2b3662] text-[#f0f2ee] p-[25px] shadow-[-2px_2px_2px_rgb(29,29,29)] mt-[14px] tracking-[2px]">low_24h: <span class="text-[#55f0fa]">  {{ props.data.low_24h }} </span></h4>
+                <h4 class="bg-[#2b3662] text-[#f0f2ee] p-[25px] shadow-[-2px_2px_2px_rgb(29,29,29)] mt-[14px] tracking-[2px]">price_change_24h: <span class="text-[#55f0fa]">  {{ props.data.price_change_24h }} </span></h4>
+                <h4 class="bg-[#2b3662] text-[#f0f2ee] p-[25px] shadow-[-2px_2px_2px_rgb(29,29,29)] mt-[14px] tracking-[2px]">Total_volume: <span class="text-[#55f0fa]">  {{ props.data.total_volume }} </span></h4>
+                <h4 class="bg-[#2b3662] text-[#f0f2ee] p-[25px] shadow-[-2px_2px_2px_rgb(29,29,29)] mt-[14px] tracking-[2px]">Total_supply: <span class="text-[#55f0fa]">  {{ props.data.total_supply }} </span></h4>
           </div>
          </div>
-         <div class="CoinConverter">
-            <span @click="props.toggleInfo" class="close">x</span>
-             <h2>Bitcoin Converter</h2>
-            <input type="number" min="0" v-model="coin" placeholder="Bitcoin" >
-            <input type="number" min="0" v-model="currency" placeholder="Usd">
-            <span class="currency-label">USD Currency</span>
+         <div class="h-full w-[320px] flex flex-col items-center">
+            <span @click="props.toggleInfo" class=" cursor-pointer text-[white] ml-[290px] text-[30px] mb-[4px]">x</span>
+             <h2 class="text-[#55f0fa] mt-[30%] text-[20px] font-bold tracking-[3px]">Bitcoin Converter</h2>
+            <input type="number" min="0" v-model="coin" v-on:focus="CoinORusd(false)" placeholder="Bitcoin"  class=" placeholder-[black] w-[220px] text-[15px] p-[5px] mt-[10px]  border border-gray-300 rounded-lg  text-black font-bold focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+            <input type="number" min="0" v-model="currency" v-on:focus="CoinORusd(true)" placeholder="USD" class="placeholder-[black] w-[220px] text-[15px] p-[5px] mt-[10px] border border-gray-300 rounded-lg text-black font-bold focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+            <span class="text-[white] text-[20px] mt-[10px]">USD Currency</span>
          </div>
         </div>
     </div>
@@ -65,45 +86,6 @@ watch(currency, (newCurrency) => {
 </template>
 
 <style scoped>
-.ParentInfoCont{
-  position: absolute;
-  z-index: 2;
-  width: 870px;
-  left: 25%;
-  top: 100px;
-}
-.InfoCaoinCont{
-   display: flex;
-    width: 900px;
-    height: 500px;
-    border: 1px solid rgb(255, 255, 255, .5);
-    background-color: rgb(50, 62, 110);
-    filter: brightness(.9);
-    box-shadow: -3px 3px 3px rgb(29, 29, 29);
-}
-.close{
-    cursor: pointer;
-}
-.CoinInfo{
-    height: 100%;
-    width: 570px;
-    border-right: 1px solid rgb(255, 255, 255, .8);
-}
-
-
-.CoinInfo h1{
-    margin-bottom: 10px;
-    font-size: 35px;
-}
-
-
-.CoinConverter{
-    height: 100%;
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-   align-items: center;
-}
 
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
@@ -111,82 +93,4 @@ input[type=number]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.CoinConverter > span:nth-child(1){
-  color: white;
-  margin-left: 290px;
-  font-size: 30px;
-  margin-bottom: 4px;
-}
-
-.CoinConverter .currency-label{
-  color: white;
-  font-size: 20px;
-  margin-top: 10px;
-}
-
-.CoinConverter h2{
-  color: #55f0fa;
- margin-top: 30%;
-}
-
-.CoinConverter input{
-   width: 220px;
-   font-size: 15px;
-   padding: 2px;
-   margin-top: 10px;
-   background-color: rgb(255, 255, 255, .8);
-}
-.NameCoin{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.NameCoin span:nth-child(1){
-  color: #55f0fa;
-}
-
-
-.CoinInfo{
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-}
-.CoinInfo img{
-    width: 50px;
-    height: 50px;
-}
-
-.CoinInfo h1{
-    margin-top: 50px;
-    letter-spacing: 5px;
-}
-.AboutCoin{
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
-.AboutCoin .CoinAbout{
-    background-color: #2b3662;
-    color: #f0f2ee;
-    font-size: 20px;
-    filter: brightness(1.3);
-    padding: 10px;
-    box-shadow: -2px 2px 2px rgb(29, 29, 29);
-}
-
-.AboutCoin h4{
-    background-color: #2b3662;
-    color: #f0f2ee;
-    padding: 25px;
-    box-shadow: -2px 2px 2px rgb(29, 29, 29);
-    margin-top: 14px;
-    letter-spacing: 2px;
-}
-
-.AboutCoin span{
-  color: #55f0fa;
-}
 </style>
